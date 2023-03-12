@@ -1,0 +1,18 @@
+.flex-card{
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+  }
+
+  .icon-color{
+    color:rgb(246, 45, 45) !important
+}
+
+.btn-getusers{
+  border: none;
+  background-color: transparent;
+  margin: 0;
+  }
+.btn-getusers:hover{
+ background-color: transparent;
+}

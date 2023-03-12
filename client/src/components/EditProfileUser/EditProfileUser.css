@@ -1,0 +1,59 @@
+.panel-body {
+    padding: 20px;
+  }
+  
+  .bio-graph-info h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  .bio-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .bio-row label {
+    width: 150px;
+    font-weight: bold;
+    margin-right: 10px;
+  }
+  
+  .bio-row input[type="text"],
+  .bio-row input[type="email"],
+  .bio-row input[type="number"] {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+  }
+  
+  .bio-row input[type="file"] {
+    margin-left: 10px;
+  }
+  
+  button[type="submit"],
+  button {
+    background-color: #f42152;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 10px;
+  }
+  
+  button[type="submit"]:hover,
+  button:hover {
+    background-color: #f75f82;
+  }
+  
+  a {
+    text-decoration: none;
+  }
+  
+  a:hover {
+    text-decoration: underline;
+  }
+  

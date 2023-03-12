@@ -1,0 +1,40 @@
+#skin {
+	position: relative;
+	justify-content: center;
+	text-align: center;
+	min-height: 100vh;
+	color: #fff;
+}
+
+#skin #background-skinimg {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	background-image: url("http://images.summitmedia-digital.com/preview/images/2021/09/15/skin-care-steps-order-nm.jpg");
+	background-size: cover;
+	z-index: -1;
+	background-color: #80a3db;
+}
+
+#skin h1 {
+	font: 72px "Amatic SC", sans-serif;
+	text-shadow: 2px 2px rgba(0, 0, 0, 0.3);
+	margin-bottom: 15px;
+}
+
+#skin h3 {
+	font: 28px "Raleway", sans-serif;
+	font-weight: 300;
+	text-shadow: 2px 2px rgba(0, 0, 0, 0.3);
+	margin-bottom: 40px;
+}
+
+#skin a.btn {
+	padding: 20px 46px;
+}
+
+#skin-content-area {
+	opacity: 0;
+	margin-top: 100px;
+	animation: 1s slidefade 1s forwards;
+}

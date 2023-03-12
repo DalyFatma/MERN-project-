@@ -1,0 +1,137 @@
+
+.row-profil{
+    margin-top: 100px !important;
+}
+.icon-color{
+color: #e07e7b !important;
+}
+.btn-post{
+background-color:  #e07e7b !important;
+}
+.btn-post:hover{
+ background-color:  #e89390 !important; 
+ color: #000000 !important;
+}
+
+.profile-nav, .profile-info{
+    margin-top:30px;   
+}
+
+.profile-nav .user-heading {
+    background: #e07e7b;
+    color: #000000;
+    border-radius: 4px 4px 0 0;
+    -webkit-border-radius: 4px 4px 0 0;
+    padding: 30px;
+    text-align: center;
+}
+
+.profile-nav .user-heading.round a  {
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    border: 10px solid rgba(255,255,255,0.3);
+    display: inline-block;
+}
+
+.profile-nav .user-heading a img {
+    width: 112px;
+    height: 112px;
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+}
+
+.profile-nav .user-heading h1 {
+    font-size: 22px;
+    font-weight: 300;
+    margin-bottom: 5px;
+}
+
+.profile-nav .user-heading p {
+    font-size: 12px;
+}
+
+.profile-nav ul {
+    margin-top: 1px;
+}
+
+.profile-nav ul > li {
+    border-bottom: 1px solid #ffffff;
+    margin-top: 0;
+    line-height: 30px;
+}
+
+.profile-nav ul > li:last-child {
+    border-bottom: none;
+}
+
+.profile-nav ul > li > a {
+    border-radius: 0;
+    -webkit-border-radius: 0;
+    color: #89817f;
+    border-left: 5px solid #fff;
+}
+
+
+.profile-nav ul > li > a{
+  background: #ffffff !important;
+  color: #040404 !important;
+  margin: 1px;
+}
+
+.profile-nav ul li.edit-profile a {
+  cursor: pointer;
+}
+
+.profile-nav ul li.edit-profile a:hover {
+  background: #f2f2f2;
+}
+
+
+.profile-info .panel-footer {
+    background-color:#f8f7f5 ;
+    border-top: 1px solid #e7ebee;
+}
+
+.profile-info .panel-footer ul li a {
+    color: #7a7a7a;
+}
+
+.bio-graph-heading {
+    background: #e07e7b;
+    color: #0c0c0c;
+    text-align: center;
+    font-style:  italic !important;
+    font-weight: bold !important;
+    font-size: 15px !important;
+    padding: 40px 110px;
+    border-radius: 4px 4px 0 0;
+    -webkit-border-radius: 4px 4px 0 0;
+    font-size: 16px;
+    font-weight: 300;
+    margin-bottom: 20px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+.nav-stacked{
+    margin-left: 0 !important;
+    margin-right: 100px !important;
+}
+
+.nav-pills .active > a:hover {
+    background-color: transparent;
+    color: inherit;
+  }
+  .nav-pills .active > a:focus {
+    background-color: transparent;
+    color: inherit;
+  }
