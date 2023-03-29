@@ -35,7 +35,7 @@ router.get("/products", async (req, res) => {
       name: { $regex: req.query.name || "", $options: "i" },
     })
       .sort({ createOn: -1 })
-      .populate("user");
+      .populate("user","name");
     res.send(products);
   } catch (err) {
     res.status(400).send({ msg: err.message });
@@ -62,7 +62,7 @@ router.put(
       }
       console.log(result);
       if (result.modifiedCount || req.file) {
-        return res.send({ msg: "Product updated successfully", hack: ProductUpdated });
+        return res.send({ msg: "Product updated successfully", product: ProductUpdated });
       }
 
       res.status(400).send({ msg: " Product aleardy updated " });
@@ -98,5 +98,28 @@ router.delete("/:id", isAuth(), async (req, res) => {
     res.status(400).send(error.message);
   }
 });
+
+
+router.post('/:productId/comments', async (req, res) => {
+  try {
+    const { productId } = req.params;
+    const { comment } = req.body;
+
+    const product = await Product.findById(productId).populate('user');
+
+    if (!product) {
+      return res.status(404).send({ msg: 'Product not found' });
+    }
+
+    product.comments.push(comment);
+    await product.save();
+
+    res.send(product);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send({ msg: 'Server error' });
+  }
+});
+
 
 module.exports = router;

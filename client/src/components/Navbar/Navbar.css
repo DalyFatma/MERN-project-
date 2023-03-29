@@ -128,5 +128,12 @@ margin: 20px;
     margin-top: 10px;
     width: 100%;
     text-align: center;
+    border-radius: 4px;
+    text-transform: uppercase;
+    font-weight: bold;
+    text-align: center;
+    background-color: #e07e7b;
+    opacity: 1;
+    transition: all 400ms;
   }
 }

@@ -18,6 +18,13 @@ export const getAllProducts = () => async (dispatch) => {
       type: GET_ALLPRODUCTS_FAIL,
       payload: err.message
     });
+    if (err.response.data.msg) { alert(err.response.data.msg) }
+    else {
+        err.response.data.err.forEach(el => {
+            alert(el.msg)
+
+        });
+    }
   }
 }
 
@@ -30,7 +37,8 @@ export const addProduct = (productBody, navigate) => async (dispatch) => {
       type: ADD_PRODUCT_SUCCESS,
       payload: resProduct.data
     });
-    navigate('/dashboard');
+    dispatch(getAllProducts())
+    navigate(-1);
   } catch (err) {
     if (err.response && err.response.status === 401) {
       // handle authentication error
@@ -42,19 +50,30 @@ export const addProduct = (productBody, navigate) => async (dispatch) => {
         payload: err.message
       });
     }
+    if (err.response.data.msg) { alert(err.response.data.msg) }
+    else {
+        err.response.data.err.forEach(el => {
+            alert(el.msg)
+
+        });
+    }
   }
 }
 
 // action to edit a product
 export const editProduct = (id, productBody, navigate) => async (dispatch) => {
+  const token = localStorage.getItem("token");
+
   try {
-    const resProduct = await axios.put(`http://localhost:5000/api/product/${id}`, productBody);
+    const resProduct = await axios.put(`http://localhost:5000/api/product/${id}`, productBody,{
+      headers: { Authorization: `Bearer ${token}` },
+    });
     dispatch({
       type: EDIT_PRODUCT_SUCCESS,
       payload: resProduct.data.product
     });
     dispatch(getAllProducts());
-    navigate('/dashboard');
+    navigate(-1);
   } catch (err) {
     if (err.response && err.response.status === 401) {
       console.log("Not authorized to perform this action");
@@ -64,9 +83,11 @@ export const editProduct = (id, productBody, navigate) => async (dispatch) => {
         type: EDIT_PRODUCT_FAIL,
         payload: err.message
       });
+     
     }
   }
 }
+
 
 // action to get a single product
 export const getOneProduct = (id) => async (dispatch) => {
@@ -85,6 +106,13 @@ export const getOneProduct = (id) => async (dispatch) => {
       type: GET_ONEPRODUCTS_FAIL,
       payload: err.message
     });
+    if (err.response.data.msg) { alert(err.response.data.msg) }
+    else {
+        err.response.data.err.forEach(el => {
+            alert(el.msg)
+
+        });
+    }
   }
 }
 
@@ -104,5 +132,6 @@ export const deletedProduct = (id) => async (dispatch) => {
         type: DELETE_ONEPRODUCTS_FAIL,
       });
     }
+    
   }
 }

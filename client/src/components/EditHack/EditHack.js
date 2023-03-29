@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate, useParams } from "react-router-dom";
-import { edithack, getOneHack } from "../../Redux/actions/actionHack/actionHack";
-
+import { useNavigate, useParams } from "react-router-dom";
+import {
+  edithack,
+  getOneHack,
+} from "../../Redux/actions/actionHack/actionHack";
 
 function EditHack() {
   const { id } = useParams();
@@ -19,42 +21,102 @@ function EditHack() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(hackUpdated);
     const data = new FormData();
     data.append("title", hackUpdated.title);
     data.append("description", hackUpdated.description);
-    data.append("file",hackUpdated.imagesrc)
+    data.append("category", hackUpdated.category);
+    data.append("file", hackUpdated.imagesrc);
+
     dispatch(edithack(oldHack._id, data, navigate));
   };
+  function handleGoBack() {
+    navigate(-1);
+  }
 
   return (
     <div>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          value={hackUpdated.title}
-          onChange={(e) =>
-            setHackUpdated({ ...hackUpdated, title: e.target.value })
-          }
-        />
-        <input
-          type="text"
-          value={hackUpdated.description}
-          onChange={(e) =>
-            setHackUpdated({ ...hackUpdated, description: e.target.value })
-          }
-        />
-        <input
-          type="file"
-          name="imagesrc"
-          onChange={(e) =>
-            setHackUpdated({ ...hackUpdated, imagesrc: e.target.files[0] })
-          }
-        />
-        <button type="submit">Save Changes</button>
-        <Link to="/dashboard">
-          <button>Cancel</button>
-        </Link>
+      <form className="add-form" onSubmit={handleSubmit}>
+        <section className="add">
+          <div className="background-add" />
+          <div className="add-content-area">
+            <h2 className="title-add">Update Hack</h2>
+            <div>
+              <label className="description-add" htmlFor="title">
+                Title
+              </label>
+              <input
+                type="text"
+                id="title"
+                value={hackUpdated.title}
+                onChange={(e) =>
+                  setHackUpdated({ ...hackUpdated, title: e.target.value })
+                }
+              />
+            </div>
+            <div>
+              <label className="description-add" htmlFor="description">
+                Description
+              </label>
+              <textarea
+                id="description"
+                value={hackUpdated.description}
+                onChange={(e) =>
+                  setHackUpdated({
+                    ...hackUpdated,
+                    description: e.target.value,
+                  })
+                }
+              ></textarea>
+              <div className="flex-choice">
+                <div className="flex-category">
+                  <div className="box">
+                    <label className="description-add">Choose category:</label>
+                    <select
+                      value={hackUpdated.category}
+                      onChange={(e) =>
+                        setHackUpdated({
+                          ...hackUpdated,
+                          category: e.target.value,
+                        })
+                      }
+                      name="category"
+                      id="pet-select"
+                    >
+                      <option value="NAILS">NAILS</option>
+                      <option value="HAIR">HAIR</option>
+                      <option value="MAKEUP">MAKEUP</option>
+                      <option value="SKIN">SKIN</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div className="flex-category">
+                  <label className="description-add">Upload Image</label>
+                  <div className="file-input">
+                    <input
+                      type="file"
+                      name="file"
+                      onChange={(e) =>
+                        setHackUpdated({
+                          ...hackUpdated,
+                          imagesrc: e.target.files[0],
+                        })
+                      }
+                    />
+                    <label>Choose File</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="flex-btn">
+              <button type="submit">Save Changes</button>
+
+              <button onClick={handleGoBack} type="button">
+                Cancel
+              </button>
+            </div>
+          </div>
+        </section>
       </form>
     </div>
   );

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import {  useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import HackCard from "../HackCard/HackCard";
 import ProductCard from "../ProductCard/ProductCard";
@@ -7,12 +7,12 @@ import "./HairCare.css";
 import Carousel from "react-bootstrap/Carousel";
 
 function HairCare() {
+  const hacks = useSelector((state) => Object.values(state.hackReducer.hacks));
+  const products = useSelector((state) => Object.values(state.productReducer.products));
   const [query, setQuery] = useState("");
   const [queryProduct, setQueryProduct] = useState("");
   const [searchedHacks, setSearchedHacks] = useState([]);
   const [searchedProducts, setSearchedProducts] = useState([]);
-  const hacks = useSelector((state) => state.hackReducer.hacks);
-  const products = useSelector((state) => state.productReducer.products);
 
   const handleSearch = () => {
     const filteredHacks = hacks.filter((hack) => {
@@ -22,13 +22,7 @@ function HairCare() {
     });
     setSearchedHacks(filteredHacks);
   };
-  const handleSearchProduct = () => {
-    const filteredProducts = products.filter((product) => {
-      const name = product.name?.toLowerCase();
-      return name?.includes(queryProduct);
-    });
-    setSearchedProducts(filteredProducts);
-  };
+  
   useEffect(() => {
     if (!query) {
       setSearchedHacks(hacks);
@@ -36,13 +30,24 @@ function HairCare() {
       handleSearch();
     }
   }, [query, hacks]);
+
+  const handleSearchProducts = () => {
+    const filteredProducts = products.filter((product) => {
+      const name = product.name?.toLowerCase();
+      return name?.includes(queryProduct);
+    });
+    setSearchedProducts(filteredProducts);
+  };
+  
   useEffect(() => {
     if (!queryProduct) {
       setSearchedProducts(products);
     } else {
-      handleSearchProduct();
+      handleSearchProducts();
     }
   }, [queryProduct, products]);
+  
+  
 
   return (
     <div>
@@ -50,7 +55,10 @@ function HairCare() {
         <div id="background-image" />
         <div id="hero-content-area">
           <h1>Unlock the Secrets to Perfect Beauty Hair!</h1>
-          <h3> You can now add and explore more about Hair care hacks and Reviewed Products!</h3>
+          <h3>
+            You can now add and explore more about Hair care hacks and Reviewed
+            Products!
+          </h3>
         </div>
       </section>
 
@@ -58,7 +66,6 @@ function HairCare() {
         <h2 className="title-section">
           Explore Our Collection of Hair Care Hacks
         </h2>
-
         <div className="input-group">
           <input
             type="search"
@@ -66,16 +73,18 @@ function HairCare() {
             id="search"
             placeholder="Search"
             value={query}
-            onChange={(e) => setQuery(e.target.value)}
+            onChange={(e)=>setQuery(e.target.value)}
             pattern=".*\S.*"
             required
           />
         </div>
 
         <div className="flex-card">
-          {searchedHacks.filter(el=>el.category=="HAIR").map((hack) => (
-            <HackCard key={hack._id} el={hack} />
-          ))}
+          {searchedHacks
+            ?.filter((el) => el.category == "HAIR")
+            .map((hack) => (
+              <HackCard key={hack._id} el={hack} />
+            ))}
         </div>
         <Link to="/hack">
           <div className="button">
@@ -97,8 +106,8 @@ function HairCare() {
         <Carousel>
           <Carousel.Item>
             <iframe
-              width="1000"
-              height="515"
+              width="700"
+              height="315"
               src="https://www.youtube.com/embed/ZU8Xl04-ZIE"
               title="YouTube video player"
               frameborder="0"
@@ -109,11 +118,10 @@ function HairCare() {
           </Carousel.Item>
           <Carousel.Item>
             <iframe
-              width="1000"
-              height="515"
+              width="700"
+              height="315"
               src="https://www.youtube.com/embed/SGxOa6ATbUo"
               title="YouTube video player"
-              frameborder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
               allowfullscreen
             ></iframe>
@@ -122,11 +130,10 @@ function HairCare() {
           </Carousel.Item>
           <Carousel.Item>
             <iframe
-              width="1000"
-              height="515"
+              width="700"
+              height="315"
               src="https://www.youtube.com/embed/mre5CGX6hPQ"
               title="YouTube video player"
-              frameborder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
               allowfullscreen
             ></iframe>
@@ -137,7 +144,6 @@ function HairCare() {
       </section>
 
       <hr className="hr-hairtip" />
-
       <section>
         <h2 className="title-section">
           Try Out This little Hair Tutorial! 😍😍😍
@@ -205,15 +211,17 @@ function HairCare() {
             id="search"
             placeholder="Search"
             value={queryProduct}
-            onChange={(e) => setQueryProduct(e.target.value)}
+            onChange={(e)=>setQueryProduct(e.target.value)}
             pattern=".*\S.*"
             required
           />
         </div>
         <div className="flex-card">
-          {searchedProducts.filter(el=>el.category=="HAIR").map((el) => (
-            <ProductCard key={el._id} el={el} />
-          ))}
+          {searchedProducts
+            .filter((el) => el.category == "HAIR")
+            .map((el) => (
+              <ProductCard key={el._id} el={el} />
+            ))}
         </div>
         <Link to="/productreview">
           <div className="button">

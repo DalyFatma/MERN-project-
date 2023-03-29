@@ -3,6 +3,7 @@ const router = express.Router();
 const BeautyHack = require("../models/Hack");
 const isAuth = require("../middlewares/isAuth");
 const upload = require("../utils/multer");
+const User = require("../models/User");
 
 // Create a beauty hack
 router.post(
@@ -11,12 +12,16 @@ router.post(
   upload("hacks").single("file"),
   async (req, res) => {
     try {
+      if (!req.file) {
+        throw new Error("No file uploaded.");
+      }
+
       const url = `${req.protocol}://${req.get("host")}/${req.file.path}`;
       const newHack = new BeautyHack({ ...req.body, user: req.user._id });
       newHack.imagesrc = url;
 
       await newHack.save();
-      res.send({ msg: "hack  added successfully", hack: newHack });
+      res.send({ msg: "Hack added successfully", hack: newHack });
     } catch (error) {
       console.log(error);
       res.status(400).send(error.message);
@@ -24,19 +29,22 @@ router.post(
   }
 );
 
+
+
 // Get all beauty hacks
 router.get("/hacks", async (req, res) => {
   try {
     const hacks = await BeautyHack.find({
-      name: { $regex: req.query.name || "", $options: "i" },
+      title: { $regex: req.query.title || "", $options: "i" },
     })
       .sort({ createOn: -1 })
-      .populate("user", "title");
+      .populate("user","name");
     res.send(hacks);
   } catch (err) {
     res.status(400).send({ msg: err.message });
   }
 });
+
 
 // Update a beauty hack
 router.put(

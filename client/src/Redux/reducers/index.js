@@ -5,4 +5,4 @@ import {productReducer } from './productReducer';
 import {adminReducer} from './adminReducer'
 
 
-export const rootReducer = combineReducers({ hackReducer ,userReducer, productReducer,adminReducer})
+export const rootReducer = combineReducers({ adminReducer,hackReducer ,userReducer, productReducer})

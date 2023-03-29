@@ -9,7 +9,7 @@ function AddHack() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [title, setTitle] = useState("");
-  const [img, setImg] = useState("");
+  const [imagesrc, setImgesrc] = useState("");
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("SKIN");
   
@@ -19,7 +19,7 @@ function AddHack() {
     const data = new FormData();
     data.append("title", title);
     data.append("description", description);
-    data.append("file", img);
+    data.append("file", imagesrc);
     data.append("category", category);
     dispatch(addHack(data, navigate));
   };
@@ -33,7 +33,7 @@ function AddHack() {
       <section className="add">
         <div className="background-add" />
         <div className="add-content-area">
-        <h2 className="title-add">Add a new hack</h2>
+        <h2 className="title-add">Add Hack</h2>
         <div>
           <label className="description-add" htmlFor="title">
             Title
@@ -73,12 +73,12 @@ function AddHack() {
           </div>
           
           <div className="flex-category">
-          <label className="description-add">Select an image:</label>
+          <label className="description-add">Upload Image</label>
           <div className="file-input">
             <input
               type="file"
               name="file"
-              onChange={(e) => setImg(e.target.files[0])}
+              onChange={(e) => setImgesrc(e.target.files[0])}
             />
             <label>Choose File</label>
             </div>

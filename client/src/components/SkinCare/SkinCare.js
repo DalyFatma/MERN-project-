@@ -7,12 +7,12 @@ import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 function SkinCare() {
+  const hacks = useSelector((state) => Object.values(state.hackReducer.hacks));
+  const products = useSelector((state) => Object.values(state.productReducer.products));
   const [query, setQuery] = useState("");
   const [queryProduct, setQueryProduct] = useState("");
   const [searchedHacks, setSearchedHacks] = useState([]);
   const [searchedProducts, setSearchedProducts] = useState([]);
-  const hacks = useSelector((state) => state.hackReducer.hacks);
-  const products = useSelector((state) => state.productReducer.products);
 
   const handleSearch = () => {
     const filteredHacks = hacks.filter((hack) => {
@@ -22,27 +22,30 @@ function SkinCare() {
     });
     setSearchedHacks(filteredHacks);
   };
-  const handleSearchProduct = () => {
-    const filteredProducts = products.filter((product) => {
-      const name = product.name?.toLowerCase();
-      return name?.includes(queryProduct);
-    });
-    setSearchedProducts(filteredProducts);
-  };
+  
   useEffect(() => {
     if (!query) {
       setSearchedHacks(hacks);
     } else {
       handleSearch();
     }
-  }, [query, hacks]);
+  }, [hacks]);
+
+  const handleSearchProducts = () => {
+    const filteredProducts = products.filter((product) => {
+      const name = product.name?.toLowerCase();
+      return name?.includes(queryProduct);
+    });
+    setSearchedProducts(filteredProducts);
+  };
+  
   useEffect(() => {
     if (!queryProduct) {
       setSearchedProducts(products);
     } else {
-      handleSearchProduct();
+      handleSearchProducts();
     }
-  }, [queryProduct, products]);
+  }, [products]);
   return (
     <div>
          <section id="skin">
@@ -99,9 +102,8 @@ function SkinCare() {
           height="315"
           src="https://www.youtube.com/embed/ilTgzCEjSMg"
           title="YouTube video player"
-          frameborder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          allowfullscreen
+          allowFullScreen
         ></iframe>
         <Carousel.Caption>
           
@@ -113,9 +115,8 @@ function SkinCare() {
           height="315"
           src="https://www.youtube.com/embed/cyMPtZwXCXA"
           title="YouTube video player"
-          frameborder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          allowfullscreen
+          allowFullScreen
         ></iframe>
 
         <Carousel.Caption></Carousel.Caption>
@@ -126,9 +127,8 @@ function SkinCare() {
           height="315"
           src="https://www.youtube.com/embed/TM6sLq3B8HI"
           title="YouTube video player"
-          frameborder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          allowfullscreen
+          allowFullScreen
         ></iframe>
 
         <Carousel.Caption></Carousel.Caption>
@@ -145,17 +145,17 @@ function SkinCare() {
   <div className="tutorial-card">
     <div className="tutorial-image">
       <img
-        src="https://i.ytimg.com/vi/zvlYOkjs_lU/maxresdefault.jpg"
+        src="https://i.ytimg.com/vi/CXlIxWB9ymg/maxresdefault.jpg"
         alt="Tutorial"
       />
     </div>
     <div className="tutorial-content">
-      <h3>How to Create a Natural Daytime Makeup Look</h3>
+      <h3>How to Create the Best Skin Care Routine</h3>
       <p>
-        Learn how to create a natural daytime makeup look with this easy-to-follow tutorial. We'll show you step-by-step how to achieve a fresh and glowing complexion, simple eye makeup, and a nude lip.
+      Creating the best skincare routine can be overwhelming, but with the right tips and guidance, it can be a simple and enjoyable process. In this tutorial, you'll learn the essential steps to create an effective skincare routine that caters to your skin's unique needs. 
       </p>
       <a
-        href="https://www.youtube.com/watch?v=zvlYOkjs_lU"
+        href="https://www.youtube.com/watch?v=CXlIxWB9ymg"
         target="_blank"
         rel="noopener noreferrer"
       >
@@ -166,17 +166,17 @@ function SkinCare() {
   <div className="tutorial-card">
     <div className="tutorial-image">
       <img
-        src="https://www.byrdie.com/thmb/hw61iQ8vMTXpN0DqPeGMApwXTLE=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/ScreenShot2020-05-28at1.19.02PM-b9c92334e493497f91a4585be75b472b.png"
+        src="https://i.ytimg.com/vi/JjT6AMKeQ54/maxresdefault.jpg"
         alt="Tutorial"
       />
     </div>
     <div className="tutorial-content">
-      <h3>How to Create a Bold and Dramatic Makeup Look</h3>
+      <h3>REVOLUTION | RELAXING & CALMING SKINCARE TUTORIAL - DRY/COMBINATION SKIN</h3>
       <p>
-        Want to turn heads with your makeup? Check out this tutorial on how to create a bold and dramatic makeup look! We'll show you how to do a smoky eye, winged liner, and a bold lip for a show-stopping effect.
+      If you're someone with dry or combination skin who's looking for a relaxing and calming skincare routine, then this tutorial is perfect for you. 
       </p>
       <a
-        href="https://www.youtube.com/watch?v=OM_diFt8jfs"
+        href="https://www.youtube.com/watch?v=JjT6AMKeQ54"
         target="_blank"
         rel="noopener noreferrer"
       >

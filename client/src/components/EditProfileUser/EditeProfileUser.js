@@ -34,10 +34,6 @@ function EditeProfileUser() {
   };
   return (
     <div>
-      <link
-        rel="stylesheet"
-        href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
-      />
       <div>
         <div className="container bootstrap snippets bootdey">
           <div className="row row-profil">
@@ -46,12 +42,12 @@ function EditeProfileUser() {
               <div className="user-heading round">
                   <a href="#">
                     <img
-                      src={userUpdated.profilePicture}
+                      src={oldUser.profilePicture}
                       alt
                     />
                   </a>
-                  <h1>{userUpdated.name}</h1>
-                  <p>{userUpdated.email}</p>
+                  <h1>{oldUser.name}</h1>
+                  <p>{oldUser.email}</p>
                 </div>
                 <ul className="nav nav-pills nav-stacked icon-flew">
                   <li className="active icon-color">

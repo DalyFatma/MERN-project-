@@ -20,7 +20,12 @@ import AddProduct from './components/AddProduct/AddProduct';
 import EditeProfileUser from './components/EditProfileUser/EditeProfileUser';
 import DashboardAdmin from './components/Admin/DashboardAdmin';
 import { getAllHacks } from './Redux/actions/actionHack/actionHack';
-import { getUserById } from './Redux/actions/actionAdmin/actionAdmin';
+import { getAllUsers} from './Redux/actions/actionAdmin/actionAdmin';
+import EditUserPage from './components/EditUserPage/EditUserPage';
+import Banned from './components/Banned/Banned';
+import EditProduct from './components/EditProduct/EditProduct';
+import HackDetails from './components/HackDetails/HackDetails';
+
 
 
 
@@ -30,7 +35,7 @@ function App() {
     dispatch(getCurrent())
     dispatch(getAllHacks())
     dispatch(getAllProducts())
-    dispatch(getUserById())
+    dispatch(getAllUsers())
   }, [dispatch])
   return (
       <Routes>
@@ -52,9 +57,12 @@ function App() {
 
       <Route path="/dashboard" element={<><PrivateRoute><Navbar /><Dashboard /></PrivateRoute></>} />
       <Route path='/edithack/:id' element={<><PrivateRoute><Navbar/><EditHack/></PrivateRoute></> }/>
+      <Route path='/editproduct/:id' element={<><PrivateRoute><Navbar/><EditProduct/></PrivateRoute></> }/>
       <Route path="/editprofile/:id" element={<><PrivateRoute><Navbar/> <EditeProfileUser/> </PrivateRoute></>}/>
       <Route path="/admin" element={<PrivateRoute><Navbar/><DashboardAdmin/></PrivateRoute>} />
-      <Route path="/admin/editadmin/:id" element={<PrivateRoute><Navbar/><EditeProfileUser/></PrivateRoute>} />
+      <Route path="/admin/editadmin/:id" element={<PrivateRoute><Navbar/><EditUserPage/></PrivateRoute>} />
+      <Route path="/banned" element={<><PrivateRoute><Banned/></PrivateRoute></>}/>
+      <Route path="/hacks/:id" element={<><PrivateRoute><Navbar/><HackDetails/></PrivateRoute></>}/>
     </Routes>
     
   );

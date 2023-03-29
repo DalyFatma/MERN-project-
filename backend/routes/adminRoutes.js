@@ -98,6 +98,26 @@ router.get("/user/:id", isAuth(), isAdmin, async (req, res) => {
     res.status(500).send({ message: "Server error" });
   }
 });
+//get user history activity
+router.get("/:id/activity", isAuth(), isAdmin, async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+    if (!Array.isArray(user.activityHistory)) {
+      res.status(400).send('Invalid activity history');
+      return;
+    }
+    const activityHistory = user.activityHistory.filter((activity) => {
+      return activity.type === 'add' || activity.type === 'edit' || activity.type === 'delete';
+    });
+    res.send(activityHistory);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Server Error');
+  }
+});
+
+
+
 
 
 //  Create a new product
@@ -133,5 +153,77 @@ router.post('/hack', isAuth() ,isAdmin, async (req, res) => {
       res.status(400).json({msg: err.message});
     }
   });
+
+
+  //banned user 
+  
+router.put('/:id/ban', async (req, res) => {
+  try {
+    const user = await User.findByIdAndUpdate(
+      req.params.id,
+      { $set: { isBanned: true } },
+      { new: true }
+    );
+
+    res.send({ msg: 'User has been banned', user });
+  } catch (error) {
+    res.status(500).send({ message: error.message });
+  }
+});
+
+//unbanned user 
+
+router.put('/:id/unban', async (req, res) => {
+  try {
+    const user = await User.findByIdAndUpdate(
+      req.params.id,
+      { $set: { isBanned: false } },
+      { new: true }
+    );
+
+    res.send({ msg: 'User has been unbanned', user });
+    
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({ message: error.message });
+  }
+});
+
+
+//ADD USER 
+
+router.post(
+  "/user",
+  isAuth(),
+  upload("pictureprofile").single("file"),
+  async (req, res) => {
+    try {
+      const url = `${req.protocol}://${req.get("host")}/${req.file.path}`;
+      const newUser = new User({ ...req.body, user: req.user._id });
+      newUser.profilePicture = url;
+
+      await newUser.save();
+      res.send({ msg: "User  added successfully", user: newUser });
+    } catch (error) {
+      console.log(error);
+      res.status(400).send(error.message);
+    }
+  }
+);
+
+//DELETE USER 
+router.delete("/:id", isAuth(), async (req, res) => {
+  try {
+    const result = await User.deleteOne({ _id: req.params.id });
+    if (result.deletedCount) {
+      return res.send({ msg: "User deleted successfully" });
+    }
+    res.status(400).send({ msg: "User aleardy deleted" });
+  } catch (error) {
+    console.log(error);
+
+    res.status(400).send(error.message);
+  }
+});
 
 module.exports = router;

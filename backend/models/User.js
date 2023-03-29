@@ -3,7 +3,7 @@ const userSchema = new mongoose.Schema(
   {
     name: { type: String, required: true, uppercase:true },
     country:{type:String,uppercase:true},
-
+    isBanned :{ type: Boolean, default: false },
     email: { type: String, required: true, trim: true, lowercase: true },
     password: { type: String, required: true },
     role: {
@@ -17,11 +17,12 @@ const userSchema = new mongoose.Schema(
 
     contactInfo: {
       type: Number,
-    },
+    },   
 
     occupation :{type:String,uppercase:true} 
   },
   { timestamps: true }
+
 );
 
 const User = mongoose.model("user", userSchema);

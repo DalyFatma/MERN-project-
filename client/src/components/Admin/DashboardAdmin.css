@@ -1,12 +1,5 @@
-table {
-    border-collapse: collapse;
-    width: 100%;
-  }
-  
-  th, td {
-    text-align: left;
-    padding: 8px;
-  }
+
+
   
   th {
     background-color: #333;
@@ -33,5 +26,49 @@ table {
     color: #fb6060;
     margin-top: 100px;
     
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+  }
+  
+  th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  @media screen and (max-width: 768px) {
+    /* Hide the table header */
+    thead {
+      display: none;
+    }
+    
+    /* Make each row display as a block */
+    tbody tr {
+      display: block;
+      margin-bottom: 20px;
+      border: 1px solid #ddd;
+    }
+    
+    /* Add a label for each row */
+    tbody td::before {
+      content: attr(data-label);
+      font-weight: bold;
+      display: block;
+      margin-bottom: 5px;
+    }
+    
+    /* Hide the first column on small screens */
+    tbody td:first-child {
+      display: none;
+    }
+  }
+
+  .add-user-icon {
+    color: rgb(255, 0, 60);
+    margin-bottom: 10px;
+    font-size: 20px;
   }
   

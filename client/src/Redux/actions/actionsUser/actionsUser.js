@@ -19,7 +19,6 @@ export const register = (newUser, navigate) => async (dispatch) => {
     );
     dispatch({ type: REGISTER_SUCCESS });
     navigate("/login");
-    alert(res.data.msg);
   } catch (error) {
     console.log(error);
     dispatch({ type: REGISTER_FAIL, payload: error });
@@ -34,10 +33,10 @@ export const login = (loginUser, navigate) => async (dispatch) => {
     );
     dispatch({ type: LOGIN_SUCCESS, payload: res.data });
     navigate("/dashboard");
-    //alert(res.data.msg)
   } catch (error) {
     console.log(error);
     dispatch({ type: LOGIN_FAIL, payload: error });
+    
   }
 };
 
@@ -48,10 +47,10 @@ export const getCurrent = () => async (dispatch) => {
       headers: { Authorization: `Bearer ${token}` },
     });
     dispatch({ type: GET_CURRENT_SUCCESS, payload: res.data });
-    //alert(res.data.msg)
   } catch (error) {
     console.log(error);
     dispatch({ type: GET_CURRENT_FAIL, payload: error });
+    
   }
 };
 

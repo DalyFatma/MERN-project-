@@ -19,40 +19,44 @@ export const getAllHacks = () => async (dispatch) => {
       type: GET_HACKS_FAILURE,
       payload: err.message
     });
+   
   }
+
 }
 
 // action to add a HACK
 export const addHack = (hack, navigate) => async (dispatch) => {
-  const token = localStorage.getItem('token');
+  
+  const token=localStorage.getItem('token');
   try {
-    const resHack = await axios.post('http://localhost:5000/api/beautyhack/hack', hack, { headers: { Authorization: `Bearer ${token}` } })
+    const resHack = await axios.post('http://localhost:5000/api/beautyhack/hack', hack,{ headers: { Authorization: `Bearer ${token}` } })
     dispatch({
       type: ADD_HACK_SUCCESS,
       payload: resHack.data
-    });
-    navigate(-1);
-  } catch (err) {
-    if (err.response && err.response.status === 401) {
-      // handle authentication error
-      console.log("Not authorized to perform this action");
-    } else {
-      console.log(err);
-      dispatch({
-        type: ADD_HACK_FAILURE,
-        payload: err.message
-      });
-    }
+    })
+    dispatch(getAllHacks())
+    navigate(-1)
   }
+  catch (err) {
+    console.log(err)
+    dispatch({
+      type: ADD_HACK_FAILURE,
+      payload: err.message
+    });
+  }
+
 }
+
+
 
 // action to edit a HACK
 export const edithack = (id, hack, navigate) => async (dispatch) => {
+  const token = localStorage.getItem('token');
   try {
-    const resHack = await axios.put(`http://localhost:5000/api/beautyhack/${id}`, hack);
+    const resHack = await axios.put(`http://localhost:5000/api/beautyhack/${id}`, hack,{ headers: { Authorization: `Bearer ${token}` } });
     dispatch({
       type: UPDATE_HACK_SUCCESS,
-      payload: resHack.data.product
+      payload: resHack.data.hack
     });
     dispatch(getAllHacks());
     navigate(-1);
@@ -66,8 +70,9 @@ export const edithack = (id, hack, navigate) => async (dispatch) => {
         payload: err.message
       });
     }
+    }
   }
-}
+
 
 // action to get a single product
 export const getOneHack = (id) => async (dispatch) => {
@@ -104,6 +109,14 @@ export const deletedHack = (id) => async (dispatch) => {
       dispatch({
         type: DELETE_ONE_HACK_FAILURE,
       });
+      if (err.response.data.msg) { alert(err.response.data.msg) }
+    else {
+        err.response.data.err.forEach(el => {
+            alert(el.msg)
+
+        });
     }
+    }
+    
   }
 }

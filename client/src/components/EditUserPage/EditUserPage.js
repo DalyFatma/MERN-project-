@@ -1,34 +1,45 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { editUserByAdmin } from "../redux/actions/adminActions";
-import { useNavigate, useParams } from "react-router-dom";
-import { getUserById } from "../../Redux/actions/actionAdmin/actionAdmin";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { editUserByAdmin, getUserById } from "../../Redux/actions/actionAdmin/actionAdmin";
+
 
 function EditUserPage() {
-    const { id } = useParams();
-    const navigate = useNavigate();
-    const dispatch = useDispatch();
-    const previousUser = useSelector((state) => state.adminReducer.userUpdated);
-    const [newUser, setNewUser] = useState({});
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const previousUser = useSelector((state) => state.adminReducer.users);
+  const userToEdit = previousUser && previousUser.find(user => user._id === id);
+  const [newUser, setNewUser] = useState(userToEdit);
+
+  useEffect(() => {
+    dispatch(getUserById(id));
+  }, [id]);
+
+  useEffect(() => {
+    if (previousUser && id) {
+      const updatedUser = previousUser.find((user) => user._id === id);
+      if (updatedUser) {
+        setNewUser(updatedUser);
+      }
+    }
+  }, [previousUser, id]);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const data = new FormData();
+    data.append("name", newUser.name);
+    data.append("country", newUser.country);
+    data.append("occupation", newUser.occupation);
+    data.append("contactInfo", newUser.contactInfo);
+    data.append("email", newUser.email);
+    data.append("role", newUser.role);
+    data.append("file", newUser.profilePicture);
+    dispatch(editUserByAdmin(newUser._id, data, navigate));
+    dispatch(getUserById(id));
+
     
-    useEffect(() => {
-        dispatch(getUserById(id));
-      }, [dispatch,id]);
-      useEffect(() => {
-        setNewUser(previousUser);
-      }, [previousUser]);
-  
-    const handleSubmit = (e) => {
-      e.preventDefault();
-      const data = new FormData();
-      data.append("name", newUser.name);
-      data.append("country", newUser.country);
-      data.append("occupation", newUser.occupation);
-      data.append("contactInfo", newUser.contactInfo);
-      data.append("email", newUser.email);
-      data.append("file", newUser.profilePicture);
-      dispatch(editUserByAdmin(userId, data, navigate));
-    };
+  };
 
   return (
     <div>
@@ -40,12 +51,12 @@ function EditUserPage() {
             <div className="user-heading round">
                 <a href="#">
                   <img
-                    src={newUser.profilePicture}
+                    src={userToEdit.profilePicture}
                     alt
                   />
                 </a>
-                <h1>{newUser.name}</h1>
-                <p>{newUser.email}</p>
+                <h1>{userToEdit.name}</h1>
+                <p>{userToEdit.email}</p>
               </div>
               <ul className="nav nav-pills nav-stacked icon-flew">
                 <li className="active icon-color">
@@ -125,6 +136,21 @@ function EditUserPage() {
                             setNewUser({
                             ...newUser,
                             email: e.target.value,
+                          })
+                        }
+                        required
+                      />
+                    </div>
+                    <div className="bio-row">
+                      <label htmlFor="name-input">Role:</label>
+                      <input
+                        id="name-input"
+                        type="text"
+                        value={newUser.role}
+                        onChange={(e) =>
+                            setNewUser({
+                            ...newUser,
+                            role: e.target.value,
                           })
                         }
                         required

@@ -1,6 +1,7 @@
 import {
   ADD_HACK_FAILURE,
   ADD_HACK_SUCCESS,
+  DELETE_ONE_HACK_FAILURE,
   DELETE_ONE_HACK_SUCCESS,
   GET_HACKS_FAILURE,
   GET_HACKS_SUCCESS,
@@ -28,32 +29,33 @@ export const hackReducer = (state = IntialState, { type, payload }) => {
       return { ...state, loading: false, errors: payload };
 
     case ADD_HACK_SUCCESS:
-      return { ...state, hacks: [...state.hacks, payload.hack] };
+      return { ...state, hacks:[...state.hacks, payload.hack] ,loading: false}
 
     case ADD_HACK_FAILURE:
       return { ...state, errors: payload };
-      
+
     case GET_ONE_HACK_SUCCESS:
-      return { ...state, loading: false , oneHack: payload };
+      return { ...state, loading: false, oneHack: payload };
 
     case GET_ONE_HACK_FAILURE:
-      return { ...state, loading: false , errors: payload };
-      
+      return { ...state, loading: false, errors: payload };
+
     case UPDATE_HACK_SUCCESS:
       return {
         ...state,
-        hacks: state.hacks.map((el) => (el._id == payload._id ? payload : el))
+        hacks: state.hacks.map((el) => (el._id == payload._id ? payload : el)),
       };
 
     case UPDATE_HACK_FAILURE:
-      return {...state, errors: payload };
-      
+      return { ...state, errors: payload };
 
     case DELETE_ONE_HACK_SUCCESS:
-      return {
+      return{
         ...state,
         hacks: state.hacks.filter((hack) => hack._id !== payload),
-      };
+      }
+    case DELETE_ONE_HACK_FAILURE:
+      return { ...state, errors: payload };
 
     default:
       return state;

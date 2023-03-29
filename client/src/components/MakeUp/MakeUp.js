@@ -7,12 +7,12 @@ import Carousel from 'react-bootstrap/Carousel';
 import ProductCard from '../ProductCard/ProductCard';
 
 function MakeUp() {
+  const hacks = useSelector((state) => Object.values(state.hackReducer.hacks));
+  const products = useSelector((state) => Object.values(state.productReducer.products));
   const [query, setQuery] = useState("");
   const [queryProduct, setQueryProduct] = useState("");
   const [searchedHacks, setSearchedHacks] = useState([]);
   const [searchedProducts, setSearchedProducts] = useState([]);
-  const hacks = useSelector((state) => state.hackReducer.hacks);
-  const products = useSelector((state) => state.productReducer.products);
 
   const handleSearch = () => {
     const filteredHacks = hacks.filter((hack) => {
@@ -22,13 +22,7 @@ function MakeUp() {
     });
     setSearchedHacks(filteredHacks);
   };
-  const handleSearchProduct = () => {
-    const filteredProducts = products.filter((product) => {
-      const name = product.name?.toLowerCase();
-      return name?.includes(queryProduct);
-    });
-    setSearchedProducts(filteredProducts);
-  };
+  
   useEffect(() => {
     if (!query) {
       setSearchedHacks(hacks);
@@ -36,11 +30,20 @@ function MakeUp() {
       handleSearch();
     }
   }, [query, hacks]);
+
+  const handleSearchProducts = () => {
+    const filteredProducts = products.filter((product) => {
+      const name = product.name?.toLowerCase();
+      return name?.includes(queryProduct);
+    });
+    setSearchedProducts(filteredProducts);
+  };
+  
   useEffect(() => {
     if (!queryProduct) {
       setSearchedProducts(products);
     } else {
-      handleSearchProduct();
+      handleSearchProducts();
     }
   }, [queryProduct, products]);
   return (
